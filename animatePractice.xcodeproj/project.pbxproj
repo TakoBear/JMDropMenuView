@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D6BCBC8918E95CBC0096F7AC /* JMDropMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCBC8818E95CBC0096F7AC /* JMDropMenuView.m */; };
 		D6D666C4181A58BF003C9A9A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6D666C3181A58BF003C9A9A /* Foundation.framework */; };
 		D6D666C6181A58BF003C9A9A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6D666C5181A58BF003C9A9A /* CoreGraphics.framework */; };
 		D6D666C8181A58BF003C9A9A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6D666C7181A58BF003C9A9A /* UIKit.framework */; };
@@ -34,6 +35,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D6BCBC8718E95CBB0096F7AC /* JMDropMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMDropMenuView.h; sourceTree = "<group>"; };
+		D6BCBC8818E95CBC0096F7AC /* JMDropMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMDropMenuView.m; sourceTree = "<group>"; };
 		D6D666C0181A58BF003C9A9A /* animatePractice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = animatePractice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6D666C3181A58BF003C9A9A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D6D666C5181A58BF003C9A9A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -117,6 +120,8 @@
 				D6D666D5181A58BF003C9A9A /* Main.storyboard */,
 				D6D666D8181A58BF003C9A9A /* ViewController.h */,
 				D6D666D9181A58BF003C9A9A /* ViewController.m */,
+				D6BCBC8718E95CBB0096F7AC /* JMDropMenuView.h */,
+				D6BCBC8818E95CBC0096F7AC /* JMDropMenuView.m */,
 				D6D666DB181A58BF003C9A9A /* Images.xcassets */,
 				D6D666CA181A58BF003C9A9A /* Supporting Files */,
 			);
@@ -196,7 +201,7 @@
 		D6D666B8181A58BF003C9A9A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "李健銘";
 				TargetAttributes = {
 					D6D666E0181A58BF003C9A9A = {
@@ -252,6 +257,7 @@
 				D6D666DA181A58BF003C9A9A /* ViewController.m in Sources */,
 				D6D666D4181A58BF003C9A9A /* AppDelegate.m in Sources */,
 				D6D666D0181A58BF003C9A9A /* main.m in Sources */,
+				D6BCBC8918E95CBC0096F7AC /* JMDropMenuView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -305,7 +311,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -345,7 +350,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -380,10 +384,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "animatePractice/animatePractice-Prefix.pch";
 				INFOPLIST_FILE = "animatePractice/animatePractice-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -393,10 +399,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "animatePractice/animatePractice-Prefix.pch";
 				INFOPLIST_FILE = "animatePractice/animatePractice-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -404,7 +412,6 @@
 		D6D666F6181A58BF003C9A9A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/animatePractice.app/animatePractice";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -427,7 +434,6 @@
 		D6D666F7181A58BF003C9A9A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/animatePractice.app/animatePractice";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -462,6 +468,7 @@
 				D6D666F4181A58BF003C9A9A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D6D666F5181A58BF003C9A9A /* Build configuration list for PBXNativeTarget "animatePracticeTests" */ = {
 			isa = XCConfigurationList;
@@ -470,6 +477,7 @@
 				D6D666F7181A58BF003C9A9A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
