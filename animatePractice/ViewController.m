@@ -36,6 +36,7 @@
     [self.view addSubview:view3];
     
     JMDropMenuView *menu = [[JMDropMenuView alloc] initWithViews:@[view1, view2, view3]];
+    menu.frame = CGRectMake(100, 100, 0, 0);
     menu.delegate = self;
     [self.view addSubview:menu];
     [menu popOut];
@@ -46,6 +47,16 @@
 {
     NSLog(@"index %ld", (long)index);
     [menu dismiss];
+}
+
+- (void)didFinishedPopOutWithDropMenu:(JMDropMenuView *)menu
+{
+    NSLog(@"Pop out finish.");
+}
+
+- (void)didFinishedDismissWithDropMenu:(JMDropMenuView *)menu
+{
+    NSLog(@"Dismiss finish");
 }
 
 - (void)didReceiveMemoryWarning

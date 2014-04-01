@@ -35,6 +35,9 @@ typedef void (^JMDropAnimationComplete)(BOOL finished);
     self = [super init];
     if (self) {
         _imgViews = [imgViews copy];
+        if (!_animateInterval) {
+            _animateInterval = 0.5f;
+        }
     }
     return self;
 }
@@ -68,7 +71,7 @@ typedef void (^JMDropAnimationComplete)(BOOL finished);
     id obj = [_imgViews objectAtIndex:0];
     CGFloat width = CGRectGetWidth([obj bounds]);
     CGFloat height = CGRectGetHeight([obj bounds]);
-    [self setFrame:CGRectMake(0, 0, width, height * _imgViews.count)];
+    [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, width, height * _imgViews.count)];
     
     // Add gesture
     for (int i = 0; i < _imgViews.count; i++) {
@@ -126,10 +129,14 @@ typedef void (^JMDropAnimationComplete)(BOOL finished);
     JMDropAnimationComplete complete = ^(BOOL finished) {
         if (finished && (imgViewsCount != _imgViews.count) && (imgViewsCount != 0)) {
             [self popOut];
+        } else {
+            if (_delegate && [_delegate respondsToSelector:@selector(didFinishedPopOutWithDropMenu:)]) {
+                [_delegate didFinishedPopOutWithDropMenu:self];
+            }
         }
     };
     
-    [UIView animateWithDuration:0.5f delay:0 options:UIViewAnimationOptionCurveEaseOut animations:animation completion:complete];
+    [UIView animateWithDuration:_animateInterval delay:0 options:UIViewAnimationOptionCurveEaseOut animations:animation completion:complete];
     
 }
 
@@ -162,10 +169,14 @@ typedef void (^JMDropAnimationComplete)(BOOL finished);
     JMDropAnimationComplete complete = ^(BOOL finished) {
         if (finished && (imgViewsCount != _imgViews.count) && (imgViewsCount != 0)) {
             [self dismiss];
+        } else {
+            if (_delegate && [_delegate respondsToSelector:@selector(didFinishedDismissWithDropMenu:)]) {
+                [_delegate didFinishedDismissWithDropMenu:self];
+            }
         }
     };
     
-    [UIView animateWithDuration:0.3f delay:0 options:UIViewAnimationOptionCurveEaseOut animations:animation completion:complete];
+    [UIView animateWithDuration:_animateInterval delay:0 options:UIViewAnimationOptionCurveEaseOut animations:animation completion:complete];
     
 }
 
