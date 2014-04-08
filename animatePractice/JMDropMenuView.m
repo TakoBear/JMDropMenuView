@@ -75,11 +75,6 @@ typedef void (^JMDropAnimationComplete)(BOOL finished);
     id obj = [_imgViews objectAtIndex:0];
     CGFloat width = CGRectGetWidth([obj bounds]);
     CGFloat height = CGRectGetHeight([obj bounds]);
-    if (_animateDirect == Animate_Drop_To_Bottom || _animateDirect == Animate_Drop_To_Top) {
-        [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, width, height * _imgViews.count)];
-    } else {
-        [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, width * _imgViews.count, height)];
-    }
     
     switch (_animateDirect) {
         case Animate_Drop_To_Top:
