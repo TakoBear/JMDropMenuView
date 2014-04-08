@@ -20,6 +20,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
+    //Only for square view
     UIImageView *view1 = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
     view1.backgroundColor = [UIColor clearColor];
     [view1 setImage:[UIImage imageNamed:@"camera.png"]];
@@ -36,7 +37,8 @@
     [self.view addSubview:view3];
     
     JMDropMenuView *menu = [[JMDropMenuView alloc] initWithViews:@[view1, view2, view3]];
-    menu.frame = CGRectMake(100, 100, 0, 0);
+    menu.frame = CGRectMake(100, 100, 0, 0);   //Position of first view
+    menu.animateDirect = Animate_Drop_To_Left; //Should decide before delegate
     menu.delegate = self;
     [self.view addSubview:menu];
     [menu popOut];

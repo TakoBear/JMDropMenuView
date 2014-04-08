@@ -38,6 +38,10 @@ typedef void (^JMDropAnimationComplete)(BOOL finished);
         if (!_animateInterval) {
             _animateInterval = 0.5f;
         }
+        
+        if (!_animateDirect) {
+            _animateDirect = Animate_Drop_To_Bottom;
+        }
     }
     return self;
 }
@@ -71,10 +75,40 @@ typedef void (^JMDropAnimationComplete)(BOOL finished);
     id obj = [_imgViews objectAtIndex:0];
     CGFloat width = CGRectGetWidth([obj bounds]);
     CGFloat height = CGRectGetHeight([obj bounds]);
-    [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, width, height * _imgViews.count)];
+    if (_animateDirect == Animate_Drop_To_Bottom || _animateDirect == Animate_Drop_To_Top) {
+        [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, width, height * _imgViews.count)];
+    } else {
+        [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, width * _imgViews.count, height)];
+    }
+    
+    switch (_animateDirect) {
+        case Animate_Drop_To_Top:
+        {
+            [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y - height * (_imgViews.count - 1), width, height * _imgViews.count)];
+        }
+            break;
+        case Animate_Drop_To_Bottom:
+        {
+            [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, width, height * _imgViews.count)];
+        }
+            break;
+        case Animate_Drop_To_Left:
+        {
+            [self setFrame:CGRectMake(self.frame.origin.x - width * (_imgViews.count - 1), self.frame.origin.y, width * _imgViews.count, height)];
+        }
+            break;
+        case Animate_Drop_To_Right:
+        {
+            [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, width * _imgViews.count, height)];
+        }
+            break;
+            
+        default:
+            break;
+    }
     
     // Add gesture
-    for (int i = 0; i < _imgViews.count; i++) {
+    for (NSInteger i = 0; i < _imgViews.count; i++) {
         id obj = [_imgViews objectAtIndex:i];
         if ([obj isKindOfClass:[UIImageView class]] || [obj isKindOfClass:[UIView class]]) {
             [obj setUserInteractionEnabled:NO];
@@ -83,12 +117,55 @@ typedef void (^JMDropAnimationComplete)(BOOL finished);
             
             CGFloat width = CGRectGetWidth([obj bounds]);
             CGFloat height = CGRectGetHeight([obj bounds]);
+            NSInteger sequence;
             
-            if (i == 0) {
-                [obj setFrame:CGRectMake(0, 0, width, height)];
-            } else {
-                [obj setFrame:CGRectMake(0, (i - 1) * width, width, height)];
+            switch (_animateDirect) {
+                case Animate_Drop_To_Top:
+                {
+                    sequence = _imgViews.count - i - 1 ;
+                    if (sequence == _imgViews.count - 1) {
+                        [obj setFrame:CGRectMake(0, sequence * width, width, height)];
+                    } else {
+                        [obj setFrame:CGRectMake(0,(sequence + 1) * height, width, height)];
+                    }
+
+                }
+                    break;
+                case Animate_Drop_To_Bottom:
+                {
+                    sequence = i;
+                    if (sequence == 0) {
+                        [obj setFrame:CGRectMake(0, 0, width, height)];
+                    } else {
+                        [obj setFrame:CGRectMake(0, (sequence - 1) * height, width, height)];
+                    }
+                }
+                    break;
+                case Animate_Drop_To_Left:
+                {
+                    sequence = _imgViews.count - i - 1 ;
+                    if (sequence == _imgViews.count - 1) {
+                        [obj setFrame:CGRectMake(sequence * width, 0, width, height)];
+                    } else {
+                        [obj setFrame:CGRectMake((sequence + 1) * width, 0, width, height)];
+                    }
+                }
+                    break;
+                case Animate_Drop_To_Right:
+                {
+                    sequence = i;
+                    if (sequence == 0) {
+                        [obj setFrame:CGRectMake(0, 0, width, height)];
+                    } else {
+                        [obj setFrame:CGRectMake((sequence - 1) * width, 0, width, height)];
+                    }
+                }
+                    break;
+                    
+                default:
+                    break;
             }
+            
             
             UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
             [obj addGestureRecognizer:tapGesture];
@@ -110,10 +187,35 @@ typedef void (^JMDropAnimationComplete)(BOOL finished);
         CGFloat width = CGRectGetWidth([view bounds]);
         CGFloat height = CGRectGetHeight([view bounds]);
         
+        NSInteger backSequece  = _imgViews.count - imgViewsCount - 1 ;
         if (imgViewsCount > 0) {
-            [view setFrame:CGRectMake(0, imgViewsCount * width, width, height)];
+            switch (_animateDirect) {
+                case Animate_Drop_To_Top:
+                {
+                    [view setFrame:CGRectMake(0, backSequece * height, width, height)];
+                }
+                    break;
+                case Animate_Drop_To_Bottom:
+                {
+                    [view setFrame:CGRectMake(0, imgViewsCount * height, width, height)];
+                }
+                    break;
+                case Animate_Drop_To_Left:
+                {
+                    [view setFrame:CGRectMake(backSequece * height, 0, width, height)];
+                }
+                    break;
+                case Animate_Drop_To_Right:
+                {
+                    [view setFrame:CGRectMake(imgViewsCount * width, 0, width, height)];
+                }
+                    break;
+                    
+                default:
+                    break;
+            }
+
         }
-        
         imgViewsCount++;
         
         if (imgViewsCount == _imgViews.count) {
@@ -152,7 +254,32 @@ typedef void (^JMDropAnimationComplete)(BOOL finished);
         CGFloat height = CGRectGetHeight([view bounds]);
         
         if (count != 0) {
-            [view setFrame:CGRectMake(0, (count-1) * width, width, height)];
+            switch (_animateDirect) {
+                case Animate_Drop_To_Top:
+                {
+                    [view setFrame:CGRectMake(0,imgViewsCount * width, width, height)];
+                }
+                    break;
+                case Animate_Drop_To_Bottom:
+                {
+                    [view setFrame:CGRectMake(0, (count-1) * width, width, height)];
+                }
+                    break;
+                case Animate_Drop_To_Left:
+                {
+                    [view setFrame:CGRectMake(imgViewsCount * height, 0, width, height)];
+
+                }
+                    break;
+                case Animate_Drop_To_Right:
+                {
+                    [view setFrame:CGRectMake((count-1) * height, 0, width, height)];
+                }
+                    break;
+                    
+                default:
+                    break;
+            }
         }
         
         imgViewsCount++;
